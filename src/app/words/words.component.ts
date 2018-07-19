@@ -123,6 +123,14 @@ export class WordsComponent implements OnInit {
     this.wordService.translateWord(this.current_word)
   }
 
+  checkAnswer2(word1: string, word2: string){
+    this.current_word = word2
+    if(this.wordService.translateWord() === word1){
+      return true;
+    }
+    else return false
+  }
+
 
   ngOnInit() {
 
