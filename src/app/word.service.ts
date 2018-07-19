@@ -31,6 +31,7 @@ export class WordService {
               for (var i = 0; i < data.length; i++) {
                 for ( var j = 0; j < data[i].length; j++) {
                   this.learningArray.push(data[i][j].word)
+                  if(this.learningArray.length > 10) break;
                 }
               }
               this.learningArrayFetch = true;
@@ -68,5 +69,48 @@ export class WordService {
       });
     }
 
+    findWordIdByUserId(user_id, word){
+      return new Promise((resolve, reject) => {
+        this.http.get('http://localhost:3000/findwordidbyuserid/' + user_id + '/' + word)
+        .subscribe(
+          (data:[any]) => {
+            if(data !== null){
+
+              resolve(data);
+            }
+              if(data === null) {  // remplacer : erreur a gerer
+              console.log("User not found");
+              reject();
+            }
+          }
+        )
+      });
+    }
+
+
+    readWord(word_id){
+      return new Promise((resolve, reject) => {
+        this.http.post('http://localhost:3000/readword/' + word_id )
+        .subscribe(
+          (data:[any]) => {
+              console.log("word read")
+              resolve(data);
+            }
+        )
+      });
+    }
+
+
+      translateWord(word){
+        return new Promise((resolve, reject) => {
+          this.http.get('http://localhost:3000/translate/' + word)
+          .subscribe(
+            (data:[any]) => {
+                console.log(data)
+                resolve(data);
+              }
+          )
+        })
+      }
 
 }
