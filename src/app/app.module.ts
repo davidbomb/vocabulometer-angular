@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { AppComponent } from './app.component';
 import { WordsComponent } from './words/words.component';
 import { HttpClientModule } from '@angular/common/http';
+import { QuizzComponent } from './quizz/quizz.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    WordsComponent
+    WordsComponent,
+    QuizzComponent
   ],
   imports: [
     BrowserModule,

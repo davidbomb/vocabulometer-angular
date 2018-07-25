@@ -15,9 +15,7 @@ import { WordService } from '../word.service'
   providers: [WordService]
 })
 export class WordsComponent implements OnInit {
-  wordList = WORDS;
-  quizzList = shuffleArray(QUIZZ);
-  quizz2List = shuffleArray(QUIZZ2);
+
   srsSize: number;
   learningArray: String[] = [];
   user_id: number;
@@ -121,7 +119,7 @@ export class WordsComponent implements OnInit {
   }
   translateWord(){
     this.wordService.translateWord(this.current_word)
-  }
+  },
 
   checkAnswer2(word1: string, word2: string){
     this.current_word = word2

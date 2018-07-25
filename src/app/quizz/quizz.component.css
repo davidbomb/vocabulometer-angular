@@ -1,0 +1,31 @@
+.container {
+  height: 97px;
+  width: 400px;
+  background-color: #C0C0C0;
+}
+
+.border {
+  border-width:1px;
+  border-style:groove;
+  border-color:#808080;
+ }
+
+.row-label {
+   text-align: center;
+   font-weight: bold;
+   color:black;
+
+}
+
+.next-button {
+  position: relative;
+  left: 303px;
+  top: 5px;
+  border: 1px solid red;
+
+}
+
+.primary-value {
+
+  
+}
