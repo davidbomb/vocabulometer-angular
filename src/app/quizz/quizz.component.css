@@ -11,7 +11,7 @@
  }
 
 .row-label {
-   text-align: center;
+   text-align: left;
    font-weight: bold;
    color:black;
 
@@ -22,10 +22,10 @@
   left: 303px;
   top: 5px;
   border: 1px solid red;
-
 }
 
 .primary-value {
-
-  
+  text-align: center;
+  font-weight: bold;
+  color:DarkGreen;
 }

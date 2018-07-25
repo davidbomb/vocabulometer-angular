@@ -16,22 +16,28 @@ import { WordService } from '../word.service'
 })
 export class WordsComponent implements OnInit {
 
-  srsSize: number;
-  learningArray: String[] = [];
-  user_id: number;
-  word_id: number;
-  current_word: string;
+  private srsSize: number;
+  private learningArray: String[] = [];
+  private tradLearningArray: String[] = [];
+  private user_id: number;
+  private word_id: number;
+  private current_word: string;
 
   selectedWord: Word;
-  hide: boolean = false;
+  private hide: boolean = false;
 
-  constructor(private wordService: WordService) { }
+  constructor(private wordService: WordService) {  }
+
+
+  getLearningArray(){
+    return this.learningArray;
+  }
+
+
 
   checkAnswer(word: Word): boolean {
     this.selectedWord = word;
     var ID = this.selectedWord.id;
-
-
     /*this.wordService.translateWord(this.current_word)
     .then( res => {
 
@@ -56,7 +62,7 @@ export class WordsComponent implements OnInit {
       this.hide = true;
       return true;
     }
-  }
+  },
 
   checkHide(boolean: this.hide): boolean { //Check the status of hide to hide/show the List
     if(this.hide === true){
@@ -81,10 +87,17 @@ export class WordsComponent implements OnInit {
           console.log("heyyyy");
           this.learningArray = data
           console.log(this.learningArray)
+
+          
+
+
         }
         err => console.log(err);
         console.log("exit get")
      );
+
+
+
   }
 
   getSrsSize(){
