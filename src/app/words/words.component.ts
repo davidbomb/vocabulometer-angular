@@ -103,16 +103,13 @@ export class WordsComponent implements OnInit {
 
             }
           )
-
-
         }
         err => console.log(err);
         console.log("exit get")
      );
+  },
 
 
-
-  }
 
   getSrsSize(){
     console.log(this.user_id)

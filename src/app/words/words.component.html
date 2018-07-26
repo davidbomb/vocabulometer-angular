@@ -17,9 +17,8 @@
 <h2>Vocabulary List</h2>
 <ul class="words">
   <div *ngIf="checkHide(this.hide)">
-    <li *ngFor="let word of learningArray">
-      <span class="badge">{{word}} : {{trad}}</span>
-
+    <li *ngFor="let word of learningArray | slice:0:learningArray.length/2; let i = index" >
+      <span class="badge">{{learningArray[i]}} :</span><span class="trad"> {{learningArray[i+11]}}  </span>
     </li>
   </div>
 
