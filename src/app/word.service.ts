@@ -31,11 +31,11 @@ export class WordService {
               this.learningArray = []   //reset the learning array
               for (var i = 0; i < data.length; i++) {
                 for ( var j = 0; j < data[i].length; j++) {
-                  this.learningArray.push(data[i][j].word)
+                  this.learningArray.push(data[i][j].word)  // see on the server side the shape of data (list of lists)
                   if(this.learningArray.length > this.learningArrayLength) break;
                 }
               }
-              resolve(this.learningArray.slice(0,this.learningArrayLength));
+              resolve(this.learningArray.slice(0,this.learningArrayLength));  // the learningArray must not countain more than learningArrayLength elements
             }
               if(!data.length) {
               console.log("No more words to learn");
@@ -103,7 +103,7 @@ export class WordService {
       translateWord(word){
         return new Promise((resolve, reject) => {
           console.log('translating...')
-          this.http.get('http://localhost:3000/translate/' + word + '?src=en'+'&dst=fr')
+          this.http.get('http://localhost:3000/translate/' + word + '?src=en'+'&dst=fr') //src and dst can be send dynamically here
           .subscribe(
             (data:[any]) => {
                 resolve(data);

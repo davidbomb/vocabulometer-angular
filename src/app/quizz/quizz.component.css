@@ -5,10 +5,10 @@
 }
 
 .border {
-  border-width:1px;
+  border-width:2px;
   border-style:groove;
   border-color:#808080;
-  
+
  }
 
 .row-label {
@@ -18,11 +18,12 @@
 
 }
 
-.next-button {
+.btn-success {
   position: relative;
   left: 303px;
   top: 5px;
-  border: 1px solid red;
+  border: 1px solid green;
+  background-color: lightblue;
 }
 
 .primary-value {

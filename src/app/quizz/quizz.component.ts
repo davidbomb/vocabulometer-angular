@@ -46,7 +46,7 @@ export class QuizzComponent implements OnInit {
     this.answer = event.target.value;
   }
 
-  nextQuizz(){
+  nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
     if(this.index < 10){
       this.words.user_id = this.user_id;

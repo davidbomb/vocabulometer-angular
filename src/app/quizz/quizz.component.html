@@ -1,9 +1,9 @@
 <app-words></app-words>
-  <div class="border">
-    <div class="container">
+  <div class="border container">
+
       <div *ngIf="quizzStart" class="score">{{score}}/{{index-1}}</div>
-        <button *ngIf="quizzStart" class="next-button" (click)="nextQuizz()" >Next</button>
-        <button *ngIf="!quizzStart" class="next-button" (click)="nextQuizz()" >Start Quizz</button>
+        <button type="button" class="btn btn-success" *ngIf="quizzStart" (click)="nextQuizz()" >Next</button>
+        <button type="button" class="btn btn-success" *ngIf="!quizzStart" (click)="nextQuizz()" >Start Quizz</button>
 
             <div class="row column  primary">
               <div class="row-label">{{lg_src}}</div>
@@ -17,7 +17,7 @@
               <div class="row-label">{{lg_dst}}</div>
               <div class="row-value">
                 <div class="primary-value" lang="en">
-                  
+
                   <input type="text" (keyup)="onAnswerKeyUp($event)" placeholder="Translation">
                 </div>
               </div>
@@ -28,5 +28,5 @@
                 </div>
               </div>
             </div>
-          </div>
+
         </div>

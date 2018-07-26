@@ -91,23 +91,21 @@ export class WordsComponent implements OnInit {
           console.log("heyyyy");
           this.learningArray = data
           console.log(this.learningArray)
-
           this.wordService.translateWord(data.toString())
           .then(
             result => {
-              this.tradLearningArray = result.split(", ")
+              this.tradLearningArray = result.split(", ")  //shaping the trad learning array
               for(var i = 0; i < this.tradLearningArray.length; i++){
-                this.learningArray.push(this.tradLearningArray[i])
+                this.learningArray.push(this.tradLearningArray[i])   //concatenantion of the learning array and its traduction
               }
               console.log(this.learningArray.length)
-
             }
           )
         }
         err => console.log(err);
         console.log("exit get")
      );
-  },
+  }
 
 
 
@@ -126,47 +124,42 @@ export class WordsComponent implements OnInit {
   },
 
   findWordIdAndRead(){
-
-      this.wordService.findWordIdByUserId(this.user_id, this.current_word)
-      .then(
-          data => {
-            console.log("heyyyy");
-            console.log(data)
-            this.word_id = data
-            this.wordService.readWord(data)
-          }
-          err => { console.log(err) };
-       );
+    this.wordService.findWordIdByUserId(this.user_id, this.current_word)
+    .then(
+        data => {
+          console.log("heyyyy");
+          console.log(data)
+          this.word_id = data
+          this.wordService.readWord(data)
+        }
+        err => { console.log(err) };
+     );
   },
 
   findWordIdAndSucceedTest(){
-
-      this.wordService.findWordIdByUserId(this.user_id, this.current_word)
-      .then(
-          data => {
-            console.log("heyyyy");
-            console.log(data)
-            this.word_id = data
-            this.wordService.succeedTest(data)
-          }
-          err => { console.log(err) };
-       );
-
+    this.wordService.findWordIdByUserId(this.user_id, this.current_word)
+    .then(
+        data => {
+          console.log("heyyyy");
+          console.log(data)
+          this.word_id = data
+          this.wordService.succeedTest(data)
+        }
+        err => { console.log(err) };
+     );
   },
 
   findWordIdAndFailTest(){
-
-      this.wordService.findWordIdByUserId(this.user_id, this.current_word)
-      .then(
-          data => {
-            console.log("heyyyy");
-            console.log(data)
-            this.word_id = data
-            this.wordService.failTest(data)
-          }
-          err => { console.log(err) };
-       );
-
+    this.wordService.findWordIdByUserId(this.user_id, this.current_word)
+    .then(
+        data => {
+          console.log("heyyyy");
+          console.log(data)
+          this.word_id = data
+          this.wordService.failTest(data)
+        }
+        err => { console.log(err) };
+     );
   },
 
 
