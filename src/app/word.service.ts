@@ -15,8 +15,9 @@ const httpOptions = {
 export class WordService {
 
   //let wordModel: { id: number, name: string }[]
-  learningArray: String[] = [];
-  learningArrayFetch: boolean = false;
+  private learningArray: String[] = [];
+  private learningArrayFetch: boolean = false;
+  private learningArrayLength: number = 10;
 
   constructor(private http:HttpClient) {}
 
@@ -31,12 +32,10 @@ export class WordService {
               for (var i = 0; i < data.length; i++) {
                 for ( var j = 0; j < data[i].length; j++) {
                   this.learningArray.push(data[i][j].word)
-                  if(this.learningArray.length > 10) break;
+                  if(this.learningArray.length > this.learningArrayLength) break;
                 }
               }
-              this.learningArrayFetch = true;
-              //console.log(this.learningArray
-              resolve(this.learningArray);
+              resolve(this.learningArray.slice(0,this.learningArrayLength));
             }
               if(!data.length) {
               console.log("No more words to learn");
@@ -111,6 +110,24 @@ export class WordService {
               }
           )
         })
+      }
+
+      succeedTest(word_id){
+        this.http.post('http://localhost:3000/test/succeed/' + word_id )
+        .subscribe(
+          (data:[any]) => {
+              console.log("test succeeded");
+            }
+        )
+      }
+
+      failTest(word_id){
+        this.http.post('http://localhost:3000/test/fail/' + word_id )
+        .subscribe(
+          (data:[any]) => {
+              console.log("test failed");
+            }
+        )
       }
 
 }

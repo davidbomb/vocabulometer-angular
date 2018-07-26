@@ -18,7 +18,7 @@
 <ul class="words">
   <div *ngIf="checkHide(this.hide)">
     <li *ngFor="let word of learningArray | slice:0:learningArray.length/2; let i = index" >
-      <span class="badge">{{learningArray[i]}} :</span><span class="trad"> {{learningArray[i+11]}}  </span>
+      <span class="badge">{{learningArray[i]}} :</span><span class="trad"> {{learningArray[i+learningArray.length/2]}}  </span>
     </li>
   </div>
 

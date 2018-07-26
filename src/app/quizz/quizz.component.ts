@@ -23,9 +23,10 @@ export class QuizzComponent implements OnInit {
   private score: number;
   private index: number;
   private quizzStart: boolean;
-  private learningLength = 11;
+  private learningArrayLength:number = 10;
 
   // Initialisation of the Quizz
+  user_id = '222';
   word = '';
   translation = '';
   quizzStart = false;
@@ -48,9 +49,21 @@ export class QuizzComponent implements OnInit {
   nextQuizz(){
     if(!this.quizzStart) this.quizzStart = true;
     if(this.index < 10){
-      if(this.answer === this.translation) {this.score++}
+      this.words.user_id = this.user_id;
+      this.words.current_word = this.word;
+
+
+      if(this.answer === this.translation) {  // the user responds correctly : he read the word and passes the testSuccess
+        this.score++;
+        this.words.findWordIdAndRead()
+        this.words.findWordIdAndSucceedTest()
+      }
+      else { this.words.findWordIdAndFailTest() } // the user responds wrong: he passes testFail
+
       this.word = this.words.getLearningArray()[this.index];
-      this.translation = this.words.getLearningArray()[this.index + this.learningLength]
+      this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
+
+      console.log(this.word  + ' : ' + this.translation)
       this.index++;
 
 
@@ -59,7 +72,7 @@ export class QuizzComponent implements OnInit {
       this.word = 'End of Quizz'
       this.translation = 'Congratulation !'
     }
-    
+
   }
 
 

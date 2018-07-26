@@ -123,35 +123,71 @@ export class WordsComponent implements OnInit {
         err => { console.log(err) };
 
      );
-  }
-
-  findWordIdByUserId(){
-    this.wordService.findWordIdByUserId(this.user_id, this.current_word)
-    .then(
-        data => {
-          console.log("heyyyy");
-          console.log(data)
-          this.word_id = data
-        }
-        err => { console.log(err) };
-
-     );
   },
+
+  findWordIdAndRead(){
+
+      this.wordService.findWordIdByUserId(this.user_id, this.current_word)
+      .then(
+          data => {
+            console.log("heyyyy");
+            console.log(data)
+            this.word_id = data
+            this.wordService.readWord(data)
+          }
+          err => { console.log(err) };
+       );
+  },
+
+  findWordIdAndSucceedTest(){
+
+      this.wordService.findWordIdByUserId(this.user_id, this.current_word)
+      .then(
+          data => {
+            console.log("heyyyy");
+            console.log(data)
+            this.word_id = data
+            this.wordService.succeedTest(data)
+          }
+          err => { console.log(err) };
+       );
+
+  },
+
+  findWordIdAndFailTest(){
+
+      this.wordService.findWordIdByUserId(this.user_id, this.current_word)
+      .then(
+          data => {
+            console.log("heyyyy");
+            console.log(data)
+            this.word_id = data
+            this.wordService.failTest(data)
+          }
+          err => { console.log(err) };
+       );
+
+  },
+
+
   readWord(){
     console.log(this.word_id)
     this.wordService.readWord(this.word_id)
-  }
+  },
+
+
+
   translateWord(){
     this.wordService.translateWord(this.current_word)
   },
 
-  checkAnswer2(word1: string, word2: string){
-    this.current_word = word2
-    if(this.wordService.translateWord() === word1){
-      return true;
-    }
-    else return false
-  }
+  succeedTest(){
+    this.wordService.succeedTest(this.word_id)
+  },
+
+
+
+
 
 
   ngOnInit() {
