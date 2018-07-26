@@ -18,8 +18,8 @@
 <ul class="words">
   <div *ngIf="checkHide(this.hide)">
     <li *ngFor="let word of learningArray">
-      <span class="badge">{{word}} :</span>
-      
+      <span class="badge">{{word}} : {{trad}}</span>
+
     </li>
   </div>
 
@@ -28,20 +28,7 @@
 </ul>
 
 <h2>Quizz Test</h2>
-<ul class="quizz">
-  <li *ngFor="let word of learningArray">
-    <span class="badge">{{word}} :</span>
-    <span class="trad"><input [(ngModel)]="word.trad" placeholder="Trad"></span>
-    <span class="feedback" *ngIf="checkAnswer(word)"> Good answer !</span>
-  </li>
-</ul>
+
 
 
 <h2>Quizz Test 2</h2>
-<ul class="quizz">
-  <li *ngFor="let word of quizz2List">
-    <span class="badge">{{word.trad}} :</span>
-    <span class="trad"><input [(ngModel)]="word.voc" placeholder="Trad"></span>
-    <span class="feedback" *ngIf="checkAnswer(word)"> Good answer !</span>
-  </li>
-</ul>

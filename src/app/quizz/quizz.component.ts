@@ -17,19 +17,23 @@ export class QuizzComponent implements OnInit {
   private lg_src: string;
   private lg_dst: string;
   private word: string;
+  private answer: string;
   private translation: string;
   private wrong_translation: string;
   private score: number;
   private index: number;
+  private quizzStart: boolean;
+  private learningLength = 11;
 
   // Initialisation of the Quizz
-  word = 'turtle';
-  translation = 'tortue';
+  word = '';
+  translation = '';
+  quizzStart = false;
   lg_src = 'English';
   lg_dst = 'French';
   index = 0;
   score = 0;
-  console.log(learningArray)
+
 
 
   @ViewChild(WordsComponent) words: WordsComponent;
@@ -37,16 +41,28 @@ export class QuizzComponent implements OnInit {
 
   constructor() { }
 
+  onAnswerKeyUp(event:any){
+    this.answer = event.target.value;
+  }
+
   nextQuizz(){
+    if(!this.quizzStart) this.quizzStart = true;
     if(this.index < 10){
-      this.index++;
+      if(this.answer === this.translation) {this.score++}
       this.word = this.words.getLearningArray()[this.index];
+      this.translation = this.words.getLearningArray()[this.index + this.learningLength]
+      this.index++;
+
+
     }
     else {
       this.word = 'End of Quizz'
+      this.translation = 'Congratulation !'
     }
-
+    
   }
+
+
 
   ngOnInit() {
 

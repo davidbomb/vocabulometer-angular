@@ -1,9 +1,10 @@
 <app-words></app-words>
-  
-  <div class="container">
-    <div class="border">
-        <a class="show-more-link" href="" title="[Shortcut : S]">More</a>
-        <button class="next-button" (click)="nextQuizz()" >Next</button>
+  <div class="border">
+    <div class="container">
+      <div *ngIf="quizzStart" class="score">{{score}}/{{index-1}}</div>
+        <button *ngIf="quizzStart" class="next-button" (click)="nextQuizz()" >Next</button>
+        <button *ngIf="!quizzStart" class="next-button" (click)="nextQuizz()" >Start Quizz</button>
+
             <div class="row column  primary">
               <div class="row-label">{{lg_src}}</div>
               <div class="row-value">
@@ -17,6 +18,7 @@
               <div class="row-value">
                 <div class="primary-value" lang="en">
                   {{translation}}
+                  <input type="text" (keyup)="onAnswerKeyUp($event)" placeholder="Translation">
                 </div>
               </div>
             </div>

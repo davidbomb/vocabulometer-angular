@@ -33,11 +33,15 @@ export class WordsComponent implements OnInit {
     return this.learningArray;
   }
 
+  getTradLearningArray(){
+    return this.tradLearningArray
+  }
+
 
 
   checkAnswer(word: Word): boolean {
     this.selectedWord = word;
-    var ID = this.selectedWord.id;
+    //var ID = this.selectedWord.id;
     /*this.wordService.translateWord(this.current_word)
     .then( res => {
 
@@ -88,7 +92,17 @@ export class WordsComponent implements OnInit {
           this.learningArray = data
           console.log(this.learningArray)
 
-          
+          this.wordService.translateWord(data.toString())
+          .then(
+            result => {
+              this.tradLearningArray = result.split(", ")
+              for(var i = 0; i < this.tradLearningArray.length; i++){
+                this.learningArray.push(this.tradLearningArray[i])
+              }
+              console.log(this.learningArray.length)
+
+            }
+          )
 
 
         }
@@ -112,7 +126,7 @@ export class WordsComponent implements OnInit {
         err => { console.log(err) };
 
      );
-  },
+  }
 
   findWordIdByUserId(){
     this.wordService.findWordIdByUserId(this.user_id, this.current_word)

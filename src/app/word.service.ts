@@ -103,10 +103,10 @@ export class WordService {
 
       translateWord(word){
         return new Promise((resolve, reject) => {
-          this.http.get('http://localhost:3000/translate/' + word)
+          console.log('translating...')
+          this.http.get('http://localhost:3000/translate/' + word + '?src=en'+'&dst=fr')
           .subscribe(
             (data:[any]) => {
-                console.log(data)
                 resolve(data);
               }
           )

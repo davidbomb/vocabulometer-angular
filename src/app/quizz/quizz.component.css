@@ -1,6 +1,6 @@
 .container {
-  height: 97px;
-  width: 400px;
+  height: 150px;
+  width: 500px;
   background-color: #C0C0C0;
 }
 
@@ -8,6 +8,7 @@
   border-width:1px;
   border-style:groove;
   border-color:#808080;
+  
  }
 
 .row-label {
@@ -28,4 +29,10 @@
   text-align: center;
   font-weight: bold;
   color:DarkGreen;
+}
+
+.score {
+  color:red;
+  font-weight:bold;
+
 }
