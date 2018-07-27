@@ -1,12 +1,12 @@
 <app-words></app-words>
   <div class="border container">
-
+      <link rel="icon" href="favicon.ico" />
       <div *ngIf="quizzStart" class="score">{{score}}/{{index-1}}</div>
         <button type="button" class="btn btn-success" *ngIf="quizzStart" (click)="nextQuizz()" >Next</button>
         <button type="button" class="btn btn-success" *ngIf="!quizzStart" (click)="nextQuizz()" >Start Quizz</button>
 
             <div class="row column  primary">
-              <div class="row-label">{{lg_src}}</div>
+              <div class="row-label w3-badge w3-jumbo w3-padding-large w3-red">{{lg_src}}</div>
               <div class="row-value">
                 <div class="primary-value" lang="ja">
                 {{word}}

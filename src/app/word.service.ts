@@ -18,6 +18,10 @@ export class WordService {
   private learningArray: String[] = [];
   private learningArrayFetch: boolean = false;
   private learningArrayLength: number = 10;
+  private myKey = '41044800ddd37e9b1d50cc137e5e843c';  //key to use the vocal synthesis API
+  private lg_speaker = 'en_us'   //english
+  private voice = 'James'  // name of the voice (depends of the language: see the API for more details)
+
 
   constructor(private http:HttpClient) {}
 
@@ -126,6 +130,15 @@ export class WordService {
         .subscribe(
           (data:[any]) => {
               console.log("test failed");
+            }
+        )
+      }
+
+      fetchVocal(word){
+        this.http.get('http://tts.readspeaker.com/a/speak?key=' + this.myKey + '&lang=' + this.lg_speaker + '&voice=' + this.voice + '&text=' + word)
+        .subscribe(
+          (data:[any]) => {
+              console.log(data.text);
             }
         )
       }

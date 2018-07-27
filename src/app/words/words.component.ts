@@ -178,6 +178,10 @@ export class WordsComponent implements OnInit {
     this.wordService.succeedTest(this.word_id)
   },
 
+  fetchVocal(){
+    this.wordService.fetchVocal(this.current_word)
+  }
+
 
 
 
