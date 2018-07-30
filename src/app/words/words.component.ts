@@ -188,18 +188,20 @@ export class WordsComponent implements OnInit {
   },
 
   createAudioTag(){
-    let audio = document.querySelector(".audio")
-    console.log(audio.childNodes)
-    while(audio.hasChildNodes()){
-      audio.removeChild(audio.childNodes[0]);
+    let div = document.querySelector(".audioDiv")
+    while(div.hasChildNodes()){            // reset the audio tag for a new vocal
+      div.removeChild(div.childNodes[0]);
     }
+    let audio = document.createElement("audio")
     let source = document.createElement("source");
     let text = document.createTextNode("Your browser does not support the audio tag");
     source.setAttribute("type", "audio/mpeg");
     source.setAttribute("src", this.vocalUrl);
+    audio.setAttribute("controls", "")
     audio.appendChild(source);
     audio.appendChild(text);
-
+    div.appendChild(audio)
+    console.log(div.childNodes)
   }
 
 
