@@ -134,13 +134,11 @@ export class WordService {
         )
       }
 
-      fetchVocal(word){
-        this.http.get('http://tts.readspeaker.com/a/speak?key=' + this.myKey + '&lang=' + this.lg_speaker + '&voice=' + this.voice + '&text=' + word)
-        .subscribe(
-          (data:[any]) => {
-              console.log(data.text);
-            }
-        )
-      }
+      fetchVocalUrl(word){
+        return new Promise((resolve, reject) => {
+          resolve('http://tts.readspeaker.com/a/speak?key=' + this.myKey + '&lang=' + this.lg_speaker + '&voice=' + this.voice + '&text=' + word)
+      })
+    }
+
 
 }

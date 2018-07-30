@@ -22,6 +22,7 @@ export class WordsComponent implements OnInit {
   private user_id: number;
   private word_id: number;
   private current_word: string;
+  private vocalUrl: string;
 
   selectedWord: Word;
   private hide: boolean = false;
@@ -166,7 +167,7 @@ export class WordsComponent implements OnInit {
   readWord(){
     console.log(this.word_id)
     this.wordService.readWord(this.word_id)
-  },
+  }
 
 
 
@@ -178,8 +179,27 @@ export class WordsComponent implements OnInit {
     this.wordService.succeedTest(this.word_id)
   },
 
-  fetchVocal(){
-    this.wordService.fetchVocal(this.current_word)
+  fetchVocalUrl(){
+    this.wordService.fetchVocalUrl(this.current_word)
+    .then( data => {
+      this.vocalUrl = data;
+      this.createAudioTag()
+    })
+  },
+
+  createAudioTag(){
+    let audio = document.querySelector(".audio")
+    console.log(audio.childNodes)
+    while(audio.hasChildNodes()){
+      audio.removeChild(audio.childNodes[0]);
+    }
+    let source = document.createElement("source");
+    let text = document.createTextNode("Your browser does not support the audio tag");
+    source.setAttribute("type", "audio/mpeg");
+    source.setAttribute("src", this.vocalUrl);
+    audio.appendChild(source);
+    audio.appendChild(text);
+
   }
 
 

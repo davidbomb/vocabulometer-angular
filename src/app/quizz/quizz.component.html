@@ -1,6 +1,10 @@
 <app-words></app-words>
   <div class="border container">
       <link rel="icon" href="favicon.ico" />
+      <audio controls class="audio">
+
+            
+      </audio>
       <div *ngIf="quizzStart" class="score">{{score}}/{{index-1}}</div>
         <button type="button" class="btn btn-success" *ngIf="quizzStart" (click)="nextQuizz()" >Next</button>
         <button type="button" class="btn btn-success" *ngIf="!quizzStart" (click)="nextQuizz()" >Start Quizz</button>
