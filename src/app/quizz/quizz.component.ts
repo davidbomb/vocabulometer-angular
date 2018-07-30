@@ -52,7 +52,6 @@ export class QuizzComponent implements OnInit {
       this.words.user_id = this.user_id;
       this.words.current_word = this.word;
 
-
       if(this.answer === this.translation) {  // the user responds correctly : he read the word and passes the testSuccess
         this.score++;
         this.words.findWordIdAndRead()
@@ -62,8 +61,10 @@ export class QuizzComponent implements OnInit {
 
       this.word = this.words.getLearningArray()[this.index];
       this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
+      this.words.fetchVocalUrl(this.word);       // to get the vocal synthesis of the current word
 
       console.log(this.word  + ' : ' + this.translation)
+
       this.index++;
 
 

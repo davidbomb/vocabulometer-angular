@@ -130,7 +130,7 @@ export class WordsComponent implements OnInit {
         data => {
           console.log("heyyyy");
           console.log(data)
-          this.word_id = data
+          this.word_id = data;
           this.wordService.readWord(data)
         }
         err => { console.log(err) };
@@ -179,8 +179,8 @@ export class WordsComponent implements OnInit {
     this.wordService.succeedTest(this.word_id)
   },
 
-  fetchVocalUrl(){
-    this.wordService.fetchVocalUrl(this.current_word)
+  fetchVocalUrl(word){
+    this.wordService.fetchVocalUrl(word)
     .then( data => {
       this.vocalUrl = data;
       this.createAudioTag()
@@ -202,7 +202,7 @@ export class WordsComponent implements OnInit {
     audio.appendChild(text);
     div.appendChild(audio)
     console.log(div.childNodes)
-  }
+  },
 
 
 
