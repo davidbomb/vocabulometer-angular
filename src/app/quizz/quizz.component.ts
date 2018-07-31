@@ -48,7 +48,7 @@ export class QuizzComponent implements OnInit {
 
   nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
-    if(this.index < 10){
+    if(this.index < this.learningArrayLength){
       this.words.user_id = this.user_id;
       this.words.current_word = this.word;
 
@@ -70,6 +70,7 @@ export class QuizzComponent implements OnInit {
 
     }
     else {
+      this.index++
       this.word = 'End of Quizz'
       this.translation = 'Congratulation !'
     }

@@ -185,7 +185,7 @@ export class WordsComponent implements OnInit {
       this.vocalUrl = data;
       this.createAudioTag()
     })
-  },
+  }
 
   createAudioTag(){
     let div = document.querySelector(".audioDiv")
@@ -196,8 +196,10 @@ export class WordsComponent implements OnInit {
     let source = document.createElement("source");
     let text = document.createTextNode("Your browser does not support the audio tag");
     source.setAttribute("type", "audio/mpeg");
-    source.setAttribute("src", this.vocalUrl);
+    source.setAttribute("src", this.vocalUrl);  // Will automatically play the fetched URL
     audio.setAttribute("controls", "")
+    audio.setAttribute("id", "audio")
+    audio.setAttribute("style", "display:none")  // To hide the audio player
     audio.appendChild(source);
     audio.appendChild(text);
     div.appendChild(audio)
