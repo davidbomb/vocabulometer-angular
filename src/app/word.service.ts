@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { wordsComponent } from './words/words.component'
 import { learningArray } from './words/words.component'
 
+
+
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -18,9 +20,12 @@ export class WordService {
   private learningArray: String[] = [];
   private learningArrayFetch: boolean = false;
   private learningArrayLength: number = 10;
+
   private myKey = '41044800ddd37e9b1d50cc137e5e843c';  //key to use the vocal synthesis API
   private lg_speaker = 'en_us'   //english
   private voice = 'James'  // name of the voice (depends of the language: see the API for more details)
+
+  private myKey2 = '546dfb52f5285442504d648e58e78959';
 
 
   constructor(private http:HttpClient) {}
@@ -137,6 +142,35 @@ export class WordService {
       fetchVocalUrl(word){
         return new Promise((resolve, reject) => {
           resolve('http://tts.readspeaker.com/a/speak?key=' + this.myKey + '&lang=' + this.lg_speaker + '&voice=' + this.voice + '&text=' + word)
+      })
+    }
+
+    getSynonym(word){
+      return new Promise((resolve, reject) => {
+        this.http.get('http://words.bighugelabs.com/api/2/' + this.myKey2 +'/'+ word +'/json')
+        .subscribe(
+          (data:[any]) => {
+            if(data.noun !== undefined) {
+              const l1 = data.noun.syn.length;
+              const noun = data.noun.syn[0];
+            }
+            if(data.adverb !== undefined) {
+              const adverb = data.adverb.syn[0];
+              const l2 = data.adverb.syn.length;
+            }
+            if(data.verb !== undefined) {
+              const verb = data.verb.syn[0]
+              const l3 = data.verb.syn.length;
+            }
+            if(data.adjective !== undefined) {
+              const adjective = data.adjective.syn[0]
+              const l4 = data.adjective.syn.length;
+            }
+            console.log([l1,l2,l3,l4].max)
+            const response = {noun, adverb, verb, adjective}
+              resolve(response); //first synonym is send for each type
+            }
+        )
       })
     }
 

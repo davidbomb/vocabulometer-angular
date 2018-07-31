@@ -122,7 +122,7 @@ export class WordsComponent implements OnInit {
         err => { console.log(err) };
 
      );
-  },
+  }
 
   findWordIdAndRead(){
     this.wordService.findWordIdByUserId(this.user_id, this.current_word)
@@ -185,7 +185,7 @@ export class WordsComponent implements OnInit {
       this.vocalUrl = data;
       this.createAudioTag()
     })
-  }
+  },
 
   createAudioTag(){
     let div = document.querySelector(".audioDiv")
@@ -205,6 +205,13 @@ export class WordsComponent implements OnInit {
     div.appendChild(audio)
     console.log(div.childNodes)
   },
+
+  getSynonym(word){
+    this.wordService.getSynonym(word)
+    .then( data => {
+      console.log(data)
+    })
+  }
 
 
 

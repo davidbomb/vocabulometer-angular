@@ -8,6 +8,7 @@
   border-width:2px;
   border-style:groove;
   border-color:#808080;
+  border-radius: 8px;
 
  }
 
@@ -75,19 +76,11 @@
   text-align:center;
   background-blend-mode: hard-light;
   border-radius: 15px;
-
-
   margin-left: 40%;
 
 }
 
-.icon {
-	height: 24px;
-	width: 24px;
-	margin-right: 12px;
-	vertical-align: middle;
-	background:url('../../volume.png');
-}
+
 
 .volume {
   width: 20px; height: 20px;

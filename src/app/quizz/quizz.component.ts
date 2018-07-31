@@ -70,7 +70,7 @@ export class QuizzComponent implements OnInit {
 
     }
     else {
-      this.index++
+      if(this.index <= this.learningArrayLength) this.index++;
       this.word = 'End of Quizz'
       this.translation = 'Congratulation !'
     }
