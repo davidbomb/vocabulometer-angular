@@ -16,6 +16,7 @@ import { WordService } from '../word.service'
 })
 export class WordsComponent implements OnInit {
 
+  private hide: boolean = false;
   private srsSize: number;
   private learningArray: String[] = [];
   private tradLearningArray: String[] = [];
@@ -24,8 +25,6 @@ export class WordsComponent implements OnInit {
   private current_word: string;
   private vocalUrl: string;
 
-  selectedWord: Word;
-  private hide: boolean = false;
 
   constructor(private wordService: WordService) {  }
 
@@ -36,26 +35,6 @@ export class WordsComponent implements OnInit {
 
   getTradLearningArray(){
     return this.tradLearningArray
-  }
-
-
-
-  checkAnswer(word: Word): boolean {
-    this.selectedWord = word;
-    //var ID = this.selectedWord.id;
-    /*this.wordService.translateWord(this.current_word)
-    .then( res => {
-
-    })*/
-
-    if (this.selectedWord.trad === this.wordList[ID].trad && this.selectedWord.voc === this.wordList[ID].voc){
-      //console.log("true");
-      return true;
-    }
-    else{
-      //console.log("false");
-      return false;
-    }
   }
 
   hideList(boolean: this.hide): boolean {

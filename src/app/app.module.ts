@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import { WordsComponent } from './words/words.component';
 import { HttpClientModule } from '@angular/common/http';
 import { QuizzComponent } from './quizz/quizz.component';
+import { SynQuizzComponent } from './syn-quizz/syn-quizz.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     WordsComponent,
-    QuizzComponent
+    QuizzComponent,
+    SynQuizzComponent
   ],
   imports: [
     BrowserModule,

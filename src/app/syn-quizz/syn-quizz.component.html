@@ -1,0 +1,38 @@
+<app-words></app-words>
+
+
+  <div class="border container">
+    <button class="btn-volume" type="button" onclick="document.getElementById('audio').play();">
+      <div class="audioDiv volume"></div>
+    </button>
+      <span *ngIf="quizzStart" class="score">{{score}}/{{index-1}}</span>
+        <button type="button" class="btn btn-next" *ngIf="quizzStart" (click)="nextQuizz()" >Next</button>
+        <button type="button" class="btn btn-start" *ngIf="!quizzStart" (click)="nextQuizz()" >Start Quizz</button>
+
+            <div class="row column  primary">
+              <div class="row-label w3-badge w3-jumbo w3-padding-large w3-red">{{lg_src}}</div>
+              <div class="row-value">
+                <div class="primary-value" lang="ja">
+                {{word}}
+                </div>
+              </div>
+            </div>
+            <div class="row column secondary">
+              <div class="row-value">
+                <div class="primary-value" lang="en">
+                  <span id="1" type="text" placeholder="word"><button>{{answer1}}</button></span>
+                  <span id="2" type="text" placeholder="word"><button>{{answer2}}</button></span> <br/>
+                  <span id="3" type="text" placeholder="word"><button>{{answer3}}</button></span>
+                  <span id="4" type="text" placeholder="word"><button>{{answer4}}</button></span>
+
+                </div>
+              </div>
+            </div>
+            <div class="row column first-audio">
+              <div class="row-value">
+                <div class="primary-value">
+                </div>
+              </div>
+            </div>
+
+        </div>
