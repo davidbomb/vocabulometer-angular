@@ -150,25 +150,38 @@ export class WordService {
         this.http.get('http://words.bighugelabs.com/api/2/' + this.myKey2 +'/'+ word +'/json')
         .subscribe(
           (data:[any]) => {
-            if(data.noun !== undefined) {
-              const l1 = data.noun.syn.length;
+            const l1 = 0,
+                  l2 = 0,
+                  l3 = 0,
+                  l4 = 0,
+                  response = [];
+            if(data.noun !== undefined && data.noun.syn !== undefined) {
+              l1 = data.noun.syn.length;
               const noun = data.noun.syn[0];
+              if(noun === word) noun = data.noun.syn[1];
             }
-            if(data.adverb !== undefined) {
+            if(data.adverb !== undefined && data.adverb.syn !== undefined) {
+              l2 = data.adverb.syn.length;
               const adverb = data.adverb.syn[0];
-              const l2 = data.adverb.syn.length;
+              if(adverb === word) adverb = data.adverb.syn[1];
             }
-            if(data.verb !== undefined) {
-              const verb = data.verb.syn[0]
-              const l3 = data.verb.syn.length;
+            if(data.verb !== undefined && data.verb.syn !== undefined) {
+              l3 = data.verb.syn.length;
+              const verb = data.verb.syn[0];
+              if(verb === word) verb = data.verb.syn[1];
             }
-            if(data.adjective !== undefined) {
-              const adjective = data.adjective.syn[0]
-              const l4 = data.adjective.syn.length;
+            if(data.adjective !== undefined && data.adjective.syn !== undefined) {
+              l4 = data.adjective.syn.length;
+              const adjective = data.adjective.syn[0];
+              if(adjective === word) adjective = data.adjective.syn[1];
             }
-            console.log([l1,l2,l3,l4].max)
-            const response = {noun, adverb, verb, adjective}
-              resolve(response); //first synonym is send for each type
+            const max = Math.max(l1,l2,l3,l4);
+            if(max === l1) response = noun;
+            if(max === l2) response = adverb;
+            if(max === l3) response = verb;
+            if(max === l4) response = adjective;
+            if(response === []) reject("No synonyms were found")
+            resolve(response); //first synonym is send for each type
             }
         )
       })
