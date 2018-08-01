@@ -5,9 +5,9 @@
 }
 
 .border {
-  border-width:2px;
+  border-width:5px;
   border-style:groove;
-  border-color:#808080;
+  border-color:#808080BB;
   border-radius: 8px;
 
  }
@@ -106,5 +106,5 @@
 .btn-volume:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
-  transform: translateY(4px);
+  transform: translateY(2px);
 }

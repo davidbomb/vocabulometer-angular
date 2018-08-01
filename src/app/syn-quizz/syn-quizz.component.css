@@ -2,12 +2,13 @@
   height: 180px;
   width: 500px;
   background-color: #B3C8FFB2;
+
 }
 
 .border {
-  border-width:2px;
+  border-width:5px;
   border-style:groove;
-  border-color:#808080;
+  border-color:#808080BB;
   border-radius: 8px;
 
  }
@@ -106,5 +107,45 @@
 .btn-volume:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
-  transform: translateY(4px);
+  transform: translateY(2px);
+}
+
+.a1 {
+  position: relative;
+  left: -15%;
+  box-shadow: 0 2px #999;
+  color: #000000CC;
+}
+.a2 {
+  position: relative;
+  left: 15%;
+  box-shadow: 0 2px #999;
+  color: #000000CC;
+}
+.a3 {
+  position: relative;
+  left: -15%;
+  bottom: -15px;
+  box-shadow: 0 2px #999;
+  color: #000000CC;
+}
+.a4 {
+  position: relative;
+  left: 15%;
+  bottom: -15px;
+  box-shadow: 0 2px #999;
+  color: #000000CC;
+}
+
+.a1:hover {
+  transform: translateY(1px);
+}
+.a2:hover {
+  transform: translateY(1px);
+}
+.a3:hover {
+  transform: translateY(1px);
+}
+.a4:hover {
+  transform: translateY(1px);
 }
