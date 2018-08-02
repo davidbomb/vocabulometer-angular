@@ -70,7 +70,14 @@ export class QuizzComponent implements OnInit {
 
     }
     else {
-      if(this.index <= this.learningArrayLength) this.index++;
+      if(this.index <= this.learningArrayLength) {
+        this.index++;
+        if(this.answer === this.translation) {  // the user responds correctly : he read the word and passes the testSuccess
+          this.score++;
+          this.words.findWordIdAndRead()
+          this.words.findWordIdAndSucceedTest()
+        }
+      }
       this.word = 'End of Quizz'
       this.translation = 'Congratulation !'
     }

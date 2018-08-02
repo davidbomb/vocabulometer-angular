@@ -19,6 +19,8 @@ export class SynQuizzComponent implements OnInit {
   private lg_src: string;
   private word: string;
   private synArray: String[] = [];
+  private rightAnswer: string;
+  private userAnswer: string;
   private answer1: string;
   private answer2: string;
   private answer3: string;
@@ -30,11 +32,12 @@ export class SynQuizzComponent implements OnInit {
 
   user_id = '222';
   user_lv = 1;
-  word = 'test';
-  answer1 = "puuute";
-  answer2 = "bite";
-  answer3 = "couillemolle";
-  answer4 = "ouiii";
+  word = '';
+  answer1 = "";
+  answer2 = "";
+  answer3 = "";
+  answer4 = "";
+  rightAnswer = 'zzz';
   translation = '';
   quizzStart = false;
   lg_src = 'English';
@@ -52,24 +55,30 @@ export class SynQuizzComponent implements OnInit {
   constructor(private wordService: WordService) { }
 
 
-  shuffleArray(array) {
+  shuffleArray(array) {  // used to mix the answers of the quizz
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
+  }
+  getClick(event:any) {
+    console.log(event.target.textContent);
+    this.userAnswer = event.target.textContent;
   }
 
 
   nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
     if(this.index < this.learningArrayLength){
-      this.synArray = [];   // set the synArray to None to erase previous random words
+      this.synArray = [];               // set the synArray to None to erase previous random words
       this.word = this.words.getLearningArray()[this.index];
+
+
 
       // fetch a synonym and mixing the answer with random words from srs
       this.wordService.getSynonym(this.word)
       .then( result => {
-        this.answer1 = result;
+        this.rightAnswer = result;       // storing the right answer now to compare with the answer provided by user after
         this.wordService.getRandomWords(this.user_id)
         .then( res => {
           for(let i = 0; i < res.length; i++){
@@ -94,30 +103,21 @@ export class SynQuizzComponent implements OnInit {
       console.log("word: " + this.word)
       console.log("syn: " + this.synonym)
       this.index++;
+      if(this.userAnswer === this.rightAnswer){
+        console.log("right answer !")
+        this.score++;
+      }
+      else console.log("wrong answer !")
     }
 
-      /*this.words.user_id = this.user_id;
-      this.words.current_word = this.word;
-
-      if(this.answer === this.translation) {  // the user responds correctly : he read the word and passes the testSuccess
-        this.score++;
-        this.words.findWordIdAndRead()
-        this.words.findWordIdAndSucceedTest()
-      }
-      else { this.words.findWordIdAndFailTest() } // the user responds wrong: he passes testFail
-
-      this.word = this.words.getLearningArray()[this.index];
-      this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
-      this.words.fetchVocalUrl(this.word);       // to get the vocal synthesis of the current word
-
-      console.log(this.word  + ' : ' + this.translation)
-
-      this.index++;
-
-
-    }*/
     else {
-      if(this.index <= this.learningArrayLength) this.index++;
+      if(this.index <= this.learningArrayLength) {
+        this.index++;
+        if(this.userAnswer === this.rightAnswer){
+          console.log("right answer !")
+          this.score++;
+        }
+      }
       this.word = 'End of Quizz'
       this.translation = 'Congratulation !'
     }
