@@ -199,7 +199,11 @@ export class WordsComponent implements OnInit {
     this.wordService.getRandomWords(user_id)
     .then(data => {console.log(data); return data })
 
-  }
+  },
+
+
+
+
 
 
 

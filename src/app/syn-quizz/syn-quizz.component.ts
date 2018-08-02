@@ -52,24 +52,42 @@ export class SynQuizzComponent implements OnInit {
   constructor(private wordService: WordService) { }
 
 
+  shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+  }
+
+
   nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
     if(this.index < this.learningArrayLength){
+      this.synArray = [];   // set the synArray to None to erase previous random words
       this.word = this.words.getLearningArray()[this.index];
-      this.wordService.getSynonym(this.word)
-      .then( res => { this.answer1 = res });
-      this.words.fetchVocalUrl(this.word);
-      this.wordService.getRandomWords(this.user_id)
-      .then( res => {
-        for(let i = 0; i < res.length; i++){
-          this.synArray[i] = res[i].word;
-        }
-          this.answer2 = this.synArray[0]
-          this.answer3 = this.synArray[1]
-          this.answer4 = this.synArray[2]
 
-        console.log("synArray " + this.synArray)
-      })
+      // fetch a synonym and mixing the answer with random words from srs
+      this.wordService.getSynonym(this.word)
+      .then( result => {
+        this.answer1 = result;
+        this.wordService.getRandomWords(this.user_id)
+        .then( res => {
+          for(let i = 0; i < res.length; i++){
+            this.synArray[i] = res[i].word;
+          }
+            this.synArray.push(result);
+            this.shuffleArray(this.synArray);
+            console.log("shuffle: " + this.synArray)
+
+            this.answer1 = this.synArray[0]
+            this.answer2 = this.synArray[1]
+            this.answer3 = this.synArray[2]
+            this.answer4 = this.synArray[3]
+        });
+      });
+
+      this.words.fetchVocalUrl(this.word);
+
       this.words.user_id = this.user_id;
       this.words.current_word = this.word;
 
@@ -105,6 +123,8 @@ export class SynQuizzComponent implements OnInit {
     }
 
   }
+
+
 
   ngOnInit() {
     this.learningArray = this.words.getLearningArray()
