@@ -7,16 +7,18 @@ import { WordService } from '../word.service'
 @Component({
   selector: 'app-syn-quizz',
   templateUrl: './syn-quizz.component.html',
-  styleUrls: ['./syn-quizz.component.css']
+  styleUrls: ['./syn-quizz.component.css'],
+    providers: [WordService]
 })
 export class SynQuizzComponent implements OnInit {
 
   private user_id: number;
+  private user_lv: number;
   private word_id: number;
   private learningArray: String[] = [];
   private lg_src: string;
   private word: string;
-  private synonym: string;
+  private synArray: String[] = [];
   private answer1: string;
   private answer2: string;
   private answer3: string;
@@ -27,6 +29,7 @@ export class SynQuizzComponent implements OnInit {
   private learningArrayLength:number = 10;
 
   user_id = '222';
+  user_lv = 1;
   word = 'test';
   answer1 = "puuute";
   answer2 = "bite";
@@ -46,20 +49,32 @@ export class SynQuizzComponent implements OnInit {
 
   @ViewChild(WordsComponent) words: WordsComponent;
 
-  constructor() { }
+  constructor(private wordService: WordService) { }
 
 
   nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
     if(this.index < this.learningArrayLength){
+      this.word = this.words.getLearningArray()[this.index];
+      this.wordService.getSynonym(this.word)
+      .then( res => { this.answer1 = res });
+      this.words.fetchVocalUrl(this.word);
+      this.wordService.getRandomWords(this.user_id)
+      .then( res => {
+        for(let i = 0; i < res.length; i++){
+          this.synArray[i] = res[i].word;
+        }
+          this.answer2 = this.synArray[0]
+          this.answer3 = this.synArray[1]
+          this.answer4 = this.synArray[2]
+
+        console.log("synArray " + this.synArray)
+      })
       this.words.user_id = this.user_id;
       this.words.current_word = this.word;
-      this.synonym = this.words.getSynonym(this.word);
+
       console.log("word: " + this.word)
       console.log("syn: " + this.synonym)
-      this.answer1 = this.words.getSynonym(this.word);
-      this.words.fetchVocalUrl(this.word);
-      this.word = this.words.getLearningArray()[this.index];
       this.index++;
     }
 

@@ -16,7 +16,8 @@ const httpOptions = {
 })
 export class WordService {
 
-  //let wordModel: { id: number, name: string }[]
+  private srsSize = 1000;  // a changer
+
   private learningArray: String[] = [];
   private learningArrayFetch: boolean = false;
   private learningArrayLength: number = 10;
@@ -183,6 +184,23 @@ export class WordService {
             if(response === []) reject("No synonyms were found")
             resolve(response); //first synonym is send for each type
             }
+        )
+      })
+    },
+
+
+    getRandomWords(user_id){
+      return new Promise((resolve, reject) => {
+        this.http.get('http://localhost:3000/srs/getallwords/' + user_id)
+        .subscribe(
+          (data:[any]) => {
+              var randNumber1 = Math.floor(Math.random() * this.srsSize)
+              var randNumber2 = Math.floor(Math.random() * this.srsSize)
+              var randNumber3 = Math.floor(Math.random() * this.srsSize)
+              var array = [data[randNumber1], data[randNumber2], data[randNumber3]]
+              resolve(array)
+            }
+          }
         )
       })
     }

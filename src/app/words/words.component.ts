@@ -186,10 +186,19 @@ export class WordsComponent implements OnInit {
   },
 
   getSynonym(word){
-    this.wordService.getSynonym(word)
-    .then( data => {
-      console.log(data)
-    })
+
+      this.wordService.getSynonym(word)
+      .then( data => {
+        //console.log(data)
+        return(data);
+      })
+
+  },
+
+  getRandomWords(user_id){
+    this.wordService.getRandomWords(user_id)
+    .then(data => {console.log(data); return data })
+
   }
 
 
