@@ -108,3 +108,11 @@
   box-shadow: 0 5px #666;
   transform: translateY(2px);
 }
+
+.quizz-start {
+  margin-left: 100px;
+  margin-right: 50px;
+  max-width: 300px;
+  text-align: center;
+  color: #000000AA
+}

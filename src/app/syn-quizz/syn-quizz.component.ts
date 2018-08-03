@@ -16,9 +16,10 @@ export class SynQuizzComponent implements OnInit {
   private user_lv: number;
   private word_id: number;
   private learningArray: String[] = [];
+  private learningArrayLength:number = 10;
   private lg_src: string;
   private word: string;
-  private synArray: String[] = [];
+  private synArray: String[] = [];   //will contain th synonym plus 3 random words
   private rightAnswer: string;
   private userAnswer: string;
   private answer1: string;
@@ -28,8 +29,8 @@ export class SynQuizzComponent implements OnInit {
   private score: number;
   private index: number;
   private quizzStart: boolean;
-  private learningArrayLength:number = 10;
 
+//initializing variables
   user_id = '222';
   user_lv = 1;
   word = '';
@@ -37,8 +38,7 @@ export class SynQuizzComponent implements OnInit {
   answer2 = "";
   answer3 = "";
   answer4 = "";
-  rightAnswer = 'zzz';
-  translation = '';
+  rightAnswer = 'zzz'  //to avoid a bug (rightAnswer = userAnswer) when pressing Start Quizz
   quizzStart = false;
   lg_src = 'English';
   index = 0;
@@ -52,7 +52,7 @@ export class SynQuizzComponent implements OnInit {
 
   @ViewChild(WordsComponent) words: WordsComponent;
 
-  constructor(private wordService: WordService) { }
+  constructor(private wordService: WordService) { }  //Some results must be fetched directly from wordService
 
 
   shuffleArray(array) {  // used to mix the answers of the quizz
@@ -61,7 +61,7 @@ export class SynQuizzComponent implements OnInit {
         [array[i], array[j]] = [array[j], array[i]];
       }
   }
-  getClick(event:any) {
+  getClick(event:any) {  // to retrieve the user's response to the quizz
     console.log(event.target.textContent);
     this.userAnswer = event.target.textContent;
   }
@@ -69,23 +69,22 @@ export class SynQuizzComponent implements OnInit {
 
   nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
+
     if(this.index < this.learningArrayLength){
       this.synArray = [];               // set the synArray to None to erase previous random words
       this.word = this.words.getLearningArray()[this.index];
-
-
 
       // fetch a synonym and mixing the answer with random words from srs
       this.wordService.getSynonym(this.word)
       .then( result => {
         this.rightAnswer = result;       // storing the right answer now to compare with the answer provided by user after
-        this.wordService.getRandomWords(this.user_id)
+        this.wordService.getRandomWords(this.user_id) // get 3 random words from the srs
         .then( res => {
           for(let i = 0; i < res.length; i++){
             this.synArray[i] = res[i].word;
           }
             this.synArray.push(result);
-            this.shuffleArray(this.synArray);
+            this.shuffleArray(this.synArray);  //shuffling the answers
             console.log("shuffle: " + this.synArray)
 
             this.answer1 = this.synArray[0]
@@ -97,29 +96,40 @@ export class SynQuizzComponent implements OnInit {
 
       this.words.fetchVocalUrl(this.word);
 
-      this.words.user_id = this.user_id;
-      this.words.current_word = this.word;
+      this.words.user_id = this.user_id;    // for findWordIdAndRead
+      this.words.current_word = this.word;  // and findWordIdAndSucceedTest
 
       console.log("word: " + this.word)
       console.log("syn: " + this.synonym)
       this.index++;
       if(this.userAnswer === this.rightAnswer){
         console.log("right answer !")
+        this.words.findWordIdAndRead();
+        this.words.findWordIdAndSucceedTest();
         this.score++;
       }
-      else console.log("wrong answer !")
+      else {
+        console.log("wrong answer !")
+      this.words.findWordIdAndFailTest();
+      }
     }
+
 
     else {
       if(this.index <= this.learningArrayLength) {
         this.index++;
         if(this.userAnswer === this.rightAnswer){
           console.log("right answer !")
+          this.words.findWordIdAndRead();
+          this.words.findWordIdAndSucceedTest();
           this.score++;
+        }
+        else {
+          console.log("wrong answer !")
+          this.words.findWordIdAndFailTest();
         }
       }
       this.word = 'End of Quizz'
-      this.translation = 'Congratulation !'
     }
 
   }

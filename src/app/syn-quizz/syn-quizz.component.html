@@ -20,11 +20,11 @@
             <div class="row column secondary">
               <div class="row-value">
                 <div class="primary-value rdmSpan" lang="en">
-
-                  <span class="s1" type="text" placeholder="word"><button class="a1" (click)="getClick($event)">{{answer1}}</button></span>
-                  <span class="s2" type="text" placeholder="word"><button class="a2" (click)="getClick($event)">{{answer2}}</button></span> <br/>
-                  <span class="s3" type="text" placeholder="word"><button class="a3" (click)="getClick($event)">{{answer3}}</button></span>
-                  <span class="s4" type="text" placeholder="word"><button class="a4" (click)="getClick($event)">{{answer4}}</button></span>
+                  <div class="quizz-start" *ngIf="!quizzStart">Get the words to learn, and then press Start to begin the synonym quizz</div>
+                  <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClick($event)">{{answer1}}</button></span>
+                  <span class="s2" type="text" *ngIf="quizzStart"><button class="a2" (click)="getClick($event)">{{answer2}}</button></span> <br/>
+                  <span class="s3" type="text" *ngIf="quizzStart"><button class="a3" (click)="getClick($event)">{{answer3}}</button></span>
+                  <span class="s4" type="text" *ngIf="quizzStart"><button class="a4" (click)="getClick($event)">{{answer4}}</button></span>
 
                 </div>
               </div>

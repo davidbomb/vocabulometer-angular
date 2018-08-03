@@ -77,9 +77,11 @@ export class QuizzComponent implements OnInit {
           this.words.findWordIdAndRead()
           this.words.findWordIdAndSucceedTest()
         }
+        else {
+          this.words.findWordIdAndFailTest()
+        }
       }
       this.word = 'End of Quizz'
-      this.translation = 'Congratulation !'
     }
 
   }

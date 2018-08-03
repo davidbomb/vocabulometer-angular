@@ -84,8 +84,8 @@ export class WordsComponent implements OnInit {
         }
         err => console.log(err);
         console.log("exit get")
+      },
      );
-  }
 
 
 
@@ -115,6 +115,7 @@ export class WordsComponent implements OnInit {
         err => { console.log(err) };
      );
   },
+  
 
   findWordIdAndSucceedTest(){
     this.wordService.findWordIdByUserId(this.user_id, this.current_word)

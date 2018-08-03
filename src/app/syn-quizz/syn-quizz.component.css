@@ -149,3 +149,10 @@
 .a4:hover {
   transform: translateY(1px);
 }
+.quizz-start {
+  margin-left: 100px;
+  margin-right: 50px;
+  max-width: 300px;
+  text-align: center;
+  color: #000000AA
+}
