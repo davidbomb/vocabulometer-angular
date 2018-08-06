@@ -73,31 +73,11 @@ export class SynQuizzComponent implements OnInit {
 
   nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
-
     if(this.index < this.learningArrayLength){
       this.synArray = [];               // set the synArray to None to erase previous random words
       this.word = this.words.getLearningArray()[this.index];
-
       // fetch a synonym and mixing the answer with random words from srs
-      this.wordService.getSynonym(this.word)
-      .then( result => {
-        this.rightAnswer = result;       // storing the right answer now to compare with the answer provided by user after
-        this.wordService.getRandomWords(this.user_id) // get 3 random words from the srs
-        .then( res => {
-          for(let i = 0; i < res.length; i++){
-            this.synArray[i] = res[i].word;
-          }
-            this.synArray.push(result);
-            this.shuffleArray(this.synArray);  //shuffling the answers
-            console.log("shuffle: " + this.synArray)
-
-            this.answer1 = this.synArray[0]
-            this.answer2 = this.synArray[1]
-            this.answer3 = this.synArray[2]
-            this.answer4 = this.synArray[3]
-        });
-      });
-
+      this.fillSynQuizz();
       this.words.fetchVocalUrl(this.word);
 
       this.words.user_id = this.user_id;    // for findWordIdAndRead
@@ -106,20 +86,8 @@ export class SynQuizzComponent implements OnInit {
       console.log("word: " + this.word)
       console.log("syn: " + this.synonym)
       this.index++;
-      if(this.userAnswer === this.rightAnswer){
-        console.log("right answer !")
-        this.words.findWordIdAndRead();
-        this.words.findWordIdAndSucceedTest();
-        this.score++;
-      }
-      else {
-        console.log("wrong answer !")
-        this.words.findWordIdAndFailTest();
-        this.indexFailList.push(this.index-1);
-      }
+      this.checkAnswer()
     }
-
-
     else {
       if(this.index <= this.learningArrayLength) {
         this.index++;
@@ -134,18 +102,59 @@ export class SynQuizzComponent implements OnInit {
           this.words.findWordIdAndFailTest();
           //this.indexFailList.push(this.index-1);
         }
-        for(let i = 0; i < this.indexFailList.length; i++) {
-          this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i]])
-        }
-        for(let i = 0; i < this.indexFailList.length; i++) {
-          this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i] + this.learningArrayLength])
-        }
+        this.fillLearningArrayFeedback();
       }
       console.log(this.learningArrayFeedback)
       this.word = 'End of Quizz'
       this.quizzFinish = true;
     }
+  }
+  
 
+
+
+  fillLearningArrayFeedback(){
+    for(let i = 0; i < this.indexFailList.length; i++) {
+      this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i]])
+    }
+    for(let i = 0; i < this.indexFailList.length; i++) {
+      this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i] + this.learningArrayLength])
+    }
+  }
+
+  checkAnswer(){
+    if(this.userAnswer === this.rightAnswer){
+      console.log("right answer !")
+      this.words.findWordIdAndRead();
+      this.words.findWordIdAndSucceedTest();
+      this.score++;
+    }
+    else {
+      console.log("wrong answer !")
+      this.words.findWordIdAndFailTest();
+      this.indexFailList.push(this.index-1);
+    }
+  }
+
+  fillSynQuizz(){
+    this.wordService.getSynonym(this.word)
+    .then( result => {
+      this.rightAnswer = result;       // storing the right answer now to compare with the answer provided by user after
+      this.wordService.getRandomWords(this.user_id) // get 3 random words from the srs
+      .then( res => {
+        for(let i = 0; i < res.length; i++){
+          this.synArray[i] = res[i].word;
+        }
+          this.synArray.push(result);
+          this.shuffleArray(this.synArray);  //shuffling the answers
+          console.log("shuffle: " + this.synArray)
+
+          this.answer1 = this.synArray[0]
+          this.answer2 = this.synArray[1]
+          this.answer3 = this.synArray[2]
+          this.answer4 = this.synArray[3]
+      });
+    });
   }
 
 
