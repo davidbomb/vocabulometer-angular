@@ -176,7 +176,7 @@ export class WordService {
               const adjective = data.adjective.syn[0];
               if(adjective === word) adjective = data.adjective.syn[1];
             }
-            const max = Math.max(l1,l2,l3,l4);
+            const max = Math.max(l1,l2,l3,l4);  // the synonym is picked from the longest list
             if(max === l1) response = noun;
             if(max === l2) response = adverb;
             if(max === l3) response = verb;

@@ -14,6 +14,8 @@ export class QuizzComponent implements OnInit {
   private user_id: number;
   private word_id: number;
   private learningArray: String[] = [];
+  private learningArrayFeedback: String = [];
+  private indexFailList: number[] = [];
   private lg_src: string;
   private lg_dst: string;
   private word: string;
@@ -23,6 +25,7 @@ export class QuizzComponent implements OnInit {
   private score: number;
   private index: number;
   private quizzStart: boolean;
+  private quizzFinish: boolean;
   private learningArrayLength:number = 10;
 
   // Initialisation of the Quizz
@@ -30,6 +33,7 @@ export class QuizzComponent implements OnInit {
   word = '';
   translation = '';
   quizzStart = false;
+  quizzFinish = false;
   lg_src = 'English';
   lg_dst = 'French';
   index = 0;
@@ -57,7 +61,10 @@ export class QuizzComponent implements OnInit {
         this.words.findWordIdAndRead()
         this.words.findWordIdAndSucceedTest()
       }
-      else { this.words.findWordIdAndFailTest() } // the user responds wrong: he passes testFail
+      else {   // the user responds wrong: he passes testFail
+        this.words.findWordIdAndFailTest();
+        this.indexFailList.push(this.index);
+      }
 
       this.word = this.words.getLearningArray()[this.index];
       this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
@@ -79,12 +86,23 @@ export class QuizzComponent implements OnInit {
         }
         else {
           this.words.findWordIdAndFailTest()
+          this.indexFailList.push(this.index);
+        }
+        for(let i = 0; i < this.indexFailList.length; i++) {
+          this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i]])
+        }
+        for(let i = 0; i < this.indexFailList.length; i++) {
+          this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i] + this.learningArrayLength])
         }
       }
+      console.log(this.learningArrayFeedback)
       this.word = 'End of Quizz'
+      this.quizzFinish = true;
     }
 
   }
+
+
 
 
 
