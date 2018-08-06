@@ -98,6 +98,7 @@ export class QuizzComponent implements OnInit {
       console.log(this.learningArrayFeedback)
       this.word = 'End of Quizz'
       this.quizzFinish = true;
+      
     }
 
   }

@@ -34,9 +34,9 @@
 
         </div>
         <div>
-          <h2> You failed the Quizz for the following words : </h2>
         <ul class="words">
           <div *ngIf="quizzFinish">
+            <h2> You failed the Quizz for the following words : </h2>
             <li *ngFor="let word of learningArrayFeedback | slice:0:learningArrayFeedback.length/2; let i = index" >
               <span class="badge">{{learningArrayFeedback[i]}} :</span><span class="trad"> {{learningArrayFeedback[i+learningArrayFeedback.length/2]}}  </span>
             </li>

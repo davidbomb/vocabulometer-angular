@@ -16,6 +16,8 @@ export class SynQuizzComponent implements OnInit {
   private user_lv: number;
   private word_id: number;
   private learningArray: String[] = [];
+  private learningArrayFeedback: String[] = [];
+  private indexFailList: number[] = [];
   private learningArrayLength:number = 10;
   private lg_src: string;
   private word: string;
@@ -29,6 +31,7 @@ export class SynQuizzComponent implements OnInit {
   private score: number;
   private index: number;
   private quizzStart: boolean;
+  private quizzFinish: boolean;
 
 //initializing variables
   user_id = '222';
@@ -40,6 +43,7 @@ export class SynQuizzComponent implements OnInit {
   answer4 = "";
   rightAnswer = 'zzz'  //to avoid a bug (rightAnswer = userAnswer) when pressing Start Quizz
   quizzStart = false;
+  quizzFinish = false;
   lg_src = 'English';
   index = 0;
   score = 0;
@@ -110,7 +114,8 @@ export class SynQuizzComponent implements OnInit {
       }
       else {
         console.log("wrong answer !")
-      this.words.findWordIdAndFailTest();
+        this.words.findWordIdAndFailTest();
+        this.indexFailList.push(this.index-1);
       }
     }
 
@@ -127,9 +132,18 @@ export class SynQuizzComponent implements OnInit {
         else {
           console.log("wrong answer !")
           this.words.findWordIdAndFailTest();
+          //this.indexFailList.push(this.index-1);
+        }
+        for(let i = 0; i < this.indexFailList.length; i++) {
+          this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i]])
+        }
+        for(let i = 0; i < this.indexFailList.length; i++) {
+          this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i] + this.learningArrayLength])
         }
       }
+      console.log(this.learningArrayFeedback)
       this.word = 'End of Quizz'
+      this.quizzFinish = true;
     }
 
   }
