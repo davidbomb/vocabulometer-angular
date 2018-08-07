@@ -13,10 +13,10 @@ import { WordService } from '../word.service'
 export class QuizzComponent implements OnInit {
   private user_id: number;
   private word_id: number;
-  private learningArray: String[] = [];
-  private learningArrayLength:number = 10;
-  private learningArrayFeedback: String = [];
-  private indexFailList: number[] = [];
+  private learningArray: String[] = [];         // contains the words to learn
+  private learningArrayLength:number = 10;      // defines the number of words in a quizz
+  private learningArrayFeedback: String = [];   // contains the words where the user failed the quizz
+  private indexFailList: number[] = [];         // retrieve the indexes of the failed words to fill learningArrayFeedback
   private lg_src: string;
   private lg_dst: string;
   private word: string;
@@ -25,8 +25,8 @@ export class QuizzComponent implements OnInit {
   private wrong_translation: string;
   private score: number;
   private index: number;
-  private quizzStart: boolean;
-  private quizzFinish: boolean;
+  private quizzStart: boolean;                   // used in the html to dispay/hide tags
+  private quizzFinish: boolean;                  // used in the html to dispay/hide tags
 
   // Initializin variables
   user_id = '222';
@@ -56,27 +56,26 @@ export class QuizzComponent implements OnInit {
       this.words.user_id = this.user_id;
       this.words.current_word = this.word;
       this.checkAnswer();
-      this.word = this.words.getLearningArray()[this.index];
-      this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
-      this.words.fetchVocalUrl(this.word);       // to get the vocal synthesis of the current word
+      if(this.index < this.learningArrayLength){ // to avoid messing up on the last "next quizz" pressure
+        this.word = this.words.getLearningArray()[this.index];
+        this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
+        this.words.fetchVocalUrl(this.word);       // to get the vocal synthesis of the current word
+      }
       console.log(this.word  + ' : ' + this.translation)
       this.index++;
     }
 
     else {
-      if(this.index <= this.learningArrayLength) {
-        this.index++;
-        this.checkAnswer();
-        this.fillLearningArrayFeedback();
-      }
+      this.fillLearningArrayFeedback();
       this.word = 'End of Quizz'
       this.quizzFinish = true;
     }
-  }
+  },
 
 
 
   fillLearningArrayFeedback(){
+    this.indexFailList.pop()        // one extra index is pushed in the loop and must be removed
     for(let i = 0; i < this.indexFailList.length; i++) {  // fills the words failed
       this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i]])
     }

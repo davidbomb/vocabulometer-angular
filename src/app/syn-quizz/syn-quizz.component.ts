@@ -15,13 +15,13 @@ export class SynQuizzComponent implements OnInit {
   private user_id: number;
   private user_lv: number;
   private word_id: number;
-  private learningArray: String[] = [];
-  private learningArrayFeedback: String[] = [];
-  private indexFailList: number[] = [];
-  private learningArrayLength:number = 10;
+  private learningArray: String[] = [];          // contains the words to learn
+  private learningArrayLength:number = 10;       // defines the number of words in a quizz
+  private learningArrayFeedback: String[] = [];  // contains the words where the user failed the quizz
+  private indexFailList: number[] = [];          // retrieve the indexes of the failed words to fill learningArrayFeedback
   private lg_src: string;
   private word: string;
-  private synArray: String[] = [];   //will contain th synonym plus 3 random words
+  private synArray: String[] = [];               // will contain th synonym plus 3 random words
   private rightAnswer: string;
   private userAnswer: string;
   private answer1: string;
@@ -30,8 +30,8 @@ export class SynQuizzComponent implements OnInit {
   private answer4: string;
   private score: number;
   private index: number;
-  private quizzStart: boolean;
-  private quizzFinish: boolean;
+  private quizzStart: boolean;                   // used in the html to dispay/hide tags
+  private quizzFinish: boolean;                  // used in the html to dispay/hide tags
 
 //initializing variables
   user_id = '222';
@@ -73,47 +73,30 @@ export class SynQuizzComponent implements OnInit {
 
   nextQuizz(){  // refresh the quizz after each answer
     if(!this.quizzStart) this.quizzStart = true;
-    if(this.index < this.learningArrayLength){
-      this.synArray = [];               // set the synArray to None to erase previous random words
-      this.word = this.words.getLearningArray()[this.index];
-      // fetch a synonym and mixing the answer with random words from srs
-      this.fillSynQuizz();
-      this.words.fetchVocalUrl(this.word);
-
+    if(this.index <= this.learningArrayLength){
+      this.synArray = [];
+      if(this.index < this.learningArrayLength){               // set the synArray to None to erase previous random words
+        this.word = this.words.getLearningArray()[this.index];
+        this.fillSynQuizz();                // fetch a synonym and mixing the answer with random words from srs
+        this.words.fetchVocalUrl(this.word);
+      }
       this.words.user_id = this.user_id;    // for findWordIdAndRead
       this.words.current_word = this.word;  // and findWordIdAndSucceedTest
-
-      console.log("word: " + this.word)
-      console.log("syn: " + this.synonym)
       this.index++;
       this.checkAnswer()
     }
     else {
-      if(this.index <= this.learningArrayLength) {
-        this.index++;
-        if(this.userAnswer === this.rightAnswer){
-          console.log("right answer !")
-          this.words.findWordIdAndRead();
-          this.words.findWordIdAndSucceedTest();
-          this.score++;
-        }
-        else {
-          console.log("wrong answer !")
-          this.words.findWordIdAndFailTest();
-          //this.indexFailList.push(this.index-1);
-        }
-        this.fillLearningArrayFeedback();
-      }
-      console.log(this.learningArrayFeedback)
+      this.fillLearningArrayFeedback();
       this.word = 'End of Quizz'
       this.quizzFinish = true;
     }
   }
-  
+
 
 
 
   fillLearningArrayFeedback(){
+    this.indexFailList.pop()  // one extra index is pushed in the loop and must be removed
     for(let i = 0; i < this.indexFailList.length; i++) {
       this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i]])
     }
