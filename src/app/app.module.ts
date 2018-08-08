@@ -6,6 +6,7 @@ import { WordsComponent } from './words/words.component';
 import { HttpClientModule } from '@angular/common/http';
 import { QuizzComponent } from './quizz/quizz.component';
 import { SynQuizzComponent } from './syn-quizz/syn-quizz.component';
+import { DefQuizzComponent } from './def-quizz/def-quizz.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SynQuizzComponent } from './syn-quizz/syn-quizz.component';
     AppComponent,
     WordsComponent,
     QuizzComponent,
-    SynQuizzComponent
+    SynQuizzComponent,
+    DefQuizzComponent
   ],
   imports: [
     BrowserModule,

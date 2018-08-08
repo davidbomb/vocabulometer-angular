@@ -8,7 +8,7 @@ import { WordService } from '../word.service'
   selector: 'app-syn-quizz',
   templateUrl: './syn-quizz.component.html',
   styleUrls: ['./syn-quizz.component.css'],
-    providers: [WordService]
+  providers: [WordService]
 })
 export class SynQuizzComponent implements OnInit {
 

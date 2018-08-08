@@ -70,7 +70,7 @@ export class QuizzComponent implements OnInit {
       this.word = 'End of Quizz'
       this.quizzFinish = true;
     }
-  },
+  }
 
 
 
