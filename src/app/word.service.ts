@@ -200,6 +200,17 @@ export class WordService {
               var array = [data[randNumber1], data[randNumber2], data[randNumber3]]
               resolve(array)
             }
+          )
+        })
+      }
+
+
+    getDefinition(word){
+      return new Promise((resolve, reject) => {
+        this.http.get('http://localhost:3000/definition/' + word)
+        .subscribe(
+          (data:[any]) => {
+            resolve(data)
           }
         )
       })

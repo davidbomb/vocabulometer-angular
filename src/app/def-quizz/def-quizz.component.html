@@ -21,16 +21,22 @@
               <div class="row-value">
                 <div class="primary-value" lang="en">
                   <div class="quizz-start" *ngIf="!quizzStart">Get the words to learn, and then press Start to begin the word quizz</div>
-                  <input type="text" *ngIf="quizzStart" (keyup)="onAnswerKeyUp($event)" placeholder="Translation">
                 </div>
               </div>
             </div>
             <div class="row column first-audio">
               <div class="row-value">
                 <div class="primary-value">
+
+                  <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClick($event)">{{def1}}</button></span>
+                  <span class="s2" type="text" *ngIf="quizzStart"><button class="a2" (click)="getClick($event)">{{def2}}</button></span>
+                  <span class="s3" type="text" *ngIf="quizzStart"><button class="a3" (click)="getClick($event)">{{def3}}</button></span>
+
+
                 </div>
               </div>
             </div>
+
 
         </div>
         <div>
