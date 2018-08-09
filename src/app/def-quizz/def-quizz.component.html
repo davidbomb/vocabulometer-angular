@@ -33,7 +33,7 @@
                   <span *ngIf='quizzStart voc' class="voc">
                     <ul>
                       <li *ngFor='let word of wordList' class="li-voc">
-                        <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClick($event)">{{word}}</button></span>
+                        <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClickVoc($event)">{{word}}</button></span>
                       </li>
                     </ul>
                   </span>
@@ -41,8 +41,8 @@
 
                   <span class="primary-value def">
                     <ul>
-                      <li *ngFor='let word of defArray' class="li-def">
-                        <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClick($event)">{{word}}</button></span>
+                      <li *ngFor='let word of defList' class="li-def">
+                        <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClickDef($event)">{{word}}</button></span>
                       </li>
                     </ul>
                   </span>

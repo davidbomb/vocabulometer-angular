@@ -18,9 +18,10 @@ export class DefQuizzComponent implements OnInit {
   private learningArrayLength:number = 10;       // defines the number of words in a quizz
   private learningArrayFeedback: String[] = [];
   private word: string;
-  private defArray: String[] = [];               // will contain th synonym plus 3 random words
+  private defArray: object = {};               // will contain th synonym plus 3 random words
   private rightAnswer: string;
-  private userAnswer: string;
+  private userAnswerVoc: string;
+  private userAnswerDef: string;
   private word1: string;
   private word2: string;
   private word3: string;
@@ -30,10 +31,12 @@ export class DefQuizzComponent implements OnInit {
   private def4: string;
   private def5: string;
   private score: number;
+  private current_score: number;
   private index: number;
   private quizzStart: boolean;                   // used in the html to dispay/hide tags
   private quizzFinish: boolean;                  // used in the html to dispay/hide tags
-  private wordList: string[] = ["cat", "dog", "penis", "vagina", "whore"]
+  private wordList: string[] = ["cat", "dog", "penis", "vagina", "whore"];
+  private defList: string[] = [];
 
   user_id = '222';
   user_lv = 1;
@@ -43,6 +46,9 @@ export class DefQuizzComponent implements OnInit {
   quizzFinish = false;
   index = 0;
   score = 0;
+  current_score = 0;
+
+
 
 
   @ViewChild(WordsComponent) words: WordsComponent;
@@ -50,11 +56,33 @@ export class DefQuizzComponent implements OnInit {
 
   constructor(private wordService: WordService) {  }
 
+
+  getClickVoc(event:any) {  // to retrieve the user's vocabulary selected
+    this.userAnswerVoc = event.target.textContent;
+    if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
+      this.score++;
+      console.log("good answer");
+      this.userAnswerVoc = "0";
+      this.userAnswerDef = "1";
+    }
+  }
+
+  getClickDef(event:any) {  // to retrieve the user's definition selected
+    this.userAnswerDef = event.target.textContent;
+    if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
+      this.score++;
+      console.log("good answer");
+      this.userAnswerVoc = "0";
+      this.userAnswerDef = "1";
+    }
+  }
+
+
   nextQuizz(){
     if(!this.quizzStart) this.quizzStart = true;
     if(this.index <= this.learningArrayLength){
-      this.index++
-      this.fillDefQuizz(["cat", "dog", "penis", "vagina", "whore"])
+      this.index++;
+      this.fillDefQuizz(this.wordList)
 
 
   }
@@ -65,17 +93,30 @@ fillDefQuizz(wordList){
     this.wordService.getDefinition(wordList[i])
     .then(
       data => {
-        this.defArray[i] = data;
+        this.defArray[wordList[i]] = data;  //fill the array with the keys (vocabulary) and values (definitions)
+        this.defList.push(data)
+      /*  if (this.defList.length === 5){
+          console.log(this.defArray);
+          while(this.current_score < 5){
+            if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
+              //this.current_score++;
+              console.log("good answer");
+              this.userAnswerVoc = "0";
+              this.userAnswerDef = "1";
+            }
+          }
+          console.log("biiiiaaaatch")
+        }*/
       }
       err => { console.log(err) };
-   );
+   );  //.then() end
+
  }
- this.def1 = this.defArray[0];
- this.def2 = this.defArray[1];
- this.def3 = this.defArray[2];
- this.def4 = this.defArray[3];
- this.def5 = this.defArray[4];
+ //console.log(this.defArray)
 }
+
+
+
 
 
 
