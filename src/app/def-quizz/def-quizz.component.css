@@ -1,6 +1,6 @@
 .container {
-  height: 180px;
-  width: 500px;
+  height: auto;
+  width: auto;
   background-color: #D7C2A0;
 }
 
@@ -161,4 +161,24 @@
   height: 1.8em;
   margin-right: .8em;
   border-radius: 4px 0 0 4px;
+}
+.def {
+  display: inline;
+  text-align: center;
+  width: 50%;
+  margin-left: 50px;
+  margin-right: 50px;
+
+}
+.voc {
+  text-align: center;
+}
+
+.li-voc {
+  display:inline;
+  padding: 0.5em
+}
+
+.li-def {
+  padding: 0.15em
 }

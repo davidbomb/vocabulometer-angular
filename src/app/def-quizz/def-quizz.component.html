@@ -1,6 +1,7 @@
 <app-words></app-words>
 
   <div class="border container">
+
     <button class="btn-volume" type="button" onclick="document.getElementById('audio').play();">
       <div class="audioDiv volume"></div>
     </button>
@@ -25,19 +26,33 @@
               </div>
             </div>
             <div class="row column first-audio">
-              <div class="row-value">
-                <div class="primary-value">
-
-                  <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClick($event)">{{def1}}</button></span>
-                  <span class="s2" type="text" *ngIf="quizzStart"><button class="a2" (click)="getClick($event)">{{def2}}</button></span>
-                  <span class="s3" type="text" *ngIf="quizzStart"><button class="a3" (click)="getClick($event)">{{def3}}</button></span>
 
 
-                </div>
-              </div>
+
+
+                  <span *ngIf='quizzStart voc' class="voc">
+                    <ul>
+                      <li *ngFor='let word of wordList' class="li-voc">
+                        <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClick($event)">{{word}}</button></span>
+                      </li>
+                    </ul>
+                  </span>
+
+
+                  <span class="primary-value def">
+                    <ul>
+                      <li *ngFor='let word of defArray' class="li-def">
+                        <span class="s1" type="text" *ngIf="quizzStart"><button class="a1" (click)="getClick($event)">{{word}}</button></span>
+                      </li>
+                    </ul>
+                  </span>
+
+
+
+
+
+
             </div>
-
-
         </div>
         <div>
         <ul class="words">

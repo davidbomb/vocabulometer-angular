@@ -18,7 +18,7 @@ export class DefQuizzComponent implements OnInit {
   private learningArrayLength:number = 10;       // defines the number of words in a quizz
   private learningArrayFeedback: String[] = [];
   private word: string;
-  private synArray: String[] = [];               // will contain th synonym plus 3 random words
+  private defArray: String[] = [];               // will contain th synonym plus 3 random words
   private rightAnswer: string;
   private userAnswer: string;
   private word1: string;
@@ -27,10 +27,13 @@ export class DefQuizzComponent implements OnInit {
   private def1: string;
   private def2: string;
   private def3: string;
+  private def4: string;
+  private def5: string;
   private score: number;
   private index: number;
   private quizzStart: boolean;                   // used in the html to dispay/hide tags
   private quizzFinish: boolean;                  // used in the html to dispay/hide tags
+  private wordList: string[] = ["cat", "dog", "penis", "vagina", "whore"]
 
   user_id = '222';
   user_lv = 1;
@@ -51,26 +54,27 @@ export class DefQuizzComponent implements OnInit {
     if(!this.quizzStart) this.quizzStart = true;
     if(this.index <= this.learningArrayLength){
       this.index++
-      this.def1 = this.getDefinition(this.words.getLearningArray()[0])
-      this.getDefinition(this.words.getLearningArray()[1])
-      this.getDefinition(this.words.getLearningArray()[2])
+      this.fillDefQuizz(["cat", "dog", "penis", "vagina", "whore"])
 
 
   }
 }
 
-getDefinition(word){
-
-    this.wordService.getDefinition(word)
+fillDefQuizz(wordList){
+  for(let i = 0; i < 5; i++){
+    this.wordService.getDefinition(wordList[i])
     .then(
       data => {
-        console.log(data)
-        return(data)
+        this.defArray[i] = data;
       }
       err => { console.log(err) };
-
    );
-
+ }
+ this.def1 = this.defArray[0];
+ this.def2 = this.defArray[1];
+ this.def3 = this.defArray[2];
+ this.def4 = this.defArray[3];
+ this.def5 = this.defArray[4];
 }
 
 
