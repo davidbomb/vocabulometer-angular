@@ -64,17 +64,17 @@ export class WordsComponent implements OnInit {
   }
 
   getWordsToLearn(){
-    console.log("function word component")
     this.wordService.getWordsToLearn(this.user_id)
     .then(
         data => {
-          console.log("heyyyy");
           this.learningArray = data
           console.log(this.learningArray)
           this.wordService.translateWord(data.toString())
           .then(
             result => {
-              this.tradLearningArray = result.split(", ")  //shaping the trad learning array
+              this.tradLearningArray = result.split(",")  //shaping the trad learning array
+              console.log("tradLearningArray " + this.tradLearningArray)
+              console.log(this.learningArray)
               for(var i = 0; i < this.tradLearningArray.length; i++){
                 this.learningArray.push(this.tradLearningArray[i])   //concatenantion of the learning array and its traduction
               }

@@ -16,34 +16,23 @@ export class DefQuizzComponent implements OnInit {
   private word_id: number;
   private learningArray: String[] = [];          // contains the words to learn
   private learningArrayLength:number = 10;       // defines the number of words in a quizz
-  private learningArrayFeedback: String[] = [];
+  private learningArrayTmp: String[] = [];
   private word: string;
   private defArray: object = {};               // will contain th synonym plus 3 random words
-  private rightAnswer: string;
   private userAnswerVoc: string;
   private userAnswerDef: string;
-  private word1: string;
-  private word2: string;
-  private word3: string;
-  private def1: string;
-  private def2: string;
-  private def3: string;
-  private def4: string;
-  private def5: string;
   private score: number;
   private current_score: number;
   private index: number;
   private quizzStart: boolean;                   // used in the html to dispay/hide tags
   private quizzFinish: boolean;                  // used in the html to dispay/hide tags
-  private wordList: string[] = ["cat", "dog", "penis", "vagina", "whore"];
+  private wordList: string[] = [];
   private defList: string[] = [];
-  private keys: string[];
-  private values: string[];
+
 
   user_id = '222';
   user_lv = 1;
   word = '';
-  rightAnswer = 'zzz'  //to avoid a bug (rightAnswer = userAnswer) when pressing Start Quizz
   quizzStart = false;
   quizzFinish = false;
   index = 0;
@@ -58,13 +47,7 @@ export class DefQuizzComponent implements OnInit {
 
   constructor(private wordService: WordService) {  }
 
-  findAndRemove(text, list){
-    for(let i = 0; i < list.length; i++){
-      if(list[i] === text){
-        list.splice(i,1);
-      }
-    }
-  }
+
 
   getClickVoc(event:any) {  // to retrieve the user's vocabulary selected
     this.userAnswerVoc = event.target.textContent;
@@ -91,13 +74,27 @@ export class DefQuizzComponent implements OnInit {
 
   nextQuizz(){
     if(!this.quizzStart) this.quizzStart = true;
-    if(this.index <= this.learningArrayLength){
+    if(this.current_score < 1 ){
       this.index++;
+      this.current_score++;
+      this.learningArray = this.words.getLearningArray()
+      for(let i = 0; i < this.learningArrayLength/2; i++){
+        this.wordList.push(this.learningArray[i]);
+      }
       this.fillDefQuizz(this.wordList)
+    }
 
-
-  }
+    if(this.score >= 5 ){
+      this.index++;
+      this.current_score++;
+      for(let i = this.learningArrayLength/2; i < this.learningArrayLength; i++){
+        this.wordList.push(this.learningArray[i]);
+      }
+      this.fillDefQuizz(this.wordList)
+    }
 }
+
+
 
 fillDefQuizz(wordList){
   for(let i = 0; i < 5; i++){
@@ -106,25 +103,27 @@ fillDefQuizz(wordList){
       data => {
         this.defArray[wordList[i]] = data;  //fill the array with the keys (vocabulary) and values (definitions)
         this.defList.push(data)
-      /*  if (this.defList.length === 5){
-          console.log(this.defArray);
-          while(this.current_score < 5){
-            if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
-              //this.current_score++;
-              console.log("good answer");
-              this.userAnswerVoc = "0";
-              this.userAnswerDef = "1";
-            }
-          }
-          console.log("biiiiaaaatch")
-        }*/
-
+        this.shuffleArray(this.defList)
       }
       err => { console.log(err) };
-   );  //.then() end
-
+   )
  }
- //console.log(this.defArray)
+}
+
+findAndRemove(text, list){ // remove from list when there is a good answer
+  for(let i = 0; i < list.length; i++){
+    if(list[i] === text){
+      list.splice(i,1);
+    }
+  }
+}
+
+
+shuffleArray(array) {  // used to mix the answers of the quizz
+  for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
 
