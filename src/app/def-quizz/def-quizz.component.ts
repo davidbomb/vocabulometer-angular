@@ -37,6 +37,8 @@ export class DefQuizzComponent implements OnInit {
   private quizzFinish: boolean;                  // used in the html to dispay/hide tags
   private wordList: string[] = ["cat", "dog", "penis", "vagina", "whore"];
   private defList: string[] = [];
+  private keys: string[];
+  private values: string[];
 
   user_id = '222';
   user_lv = 1;
@@ -56,14 +58,22 @@ export class DefQuizzComponent implements OnInit {
 
   constructor(private wordService: WordService) {  }
 
+  findAndRemove(text, list){
+    for(let i = 0; i < list.length; i++){
+      if(list[i] === text){
+        list.splice(i,1);
+      }
+    }
+  }
 
   getClickVoc(event:any) {  // to retrieve the user's vocabulary selected
     this.userAnswerVoc = event.target.textContent;
     if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
       this.score++;
+      this.index++;
+      this.findAndRemove(this.userAnswerVoc, this.wordList)
+      this.findAndRemove(this.userAnswerDef, this.defList)
       console.log("good answer");
-      this.userAnswerVoc = "0";
-      this.userAnswerDef = "1";
     }
   }
 
@@ -71,9 +81,10 @@ export class DefQuizzComponent implements OnInit {
     this.userAnswerDef = event.target.textContent;
     if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
       this.score++;
+      this.index++;
+      this.findAndRemove(this.userAnswerVoc, this.wordList)
+      this.findAndRemove(this.userAnswerDef, this.defList)
       console.log("good answer");
-      this.userAnswerVoc = "0";
-      this.userAnswerDef = "1";
     }
   }
 
@@ -107,6 +118,7 @@ fillDefQuizz(wordList){
           }
           console.log("biiiiaaaatch")
         }*/
+
       }
       err => { console.log(err) };
    );  //.then() end
