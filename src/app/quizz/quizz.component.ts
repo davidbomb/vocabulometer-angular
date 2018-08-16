@@ -51,21 +51,23 @@ export class QuizzComponent implements OnInit {
   }
 
   nextQuizz(){  // refresh the quizz after each answer
-    if(!this.quizzStart) this.quizzStart = true;  // Quizz hasn't started yet
+    if(!this.quizzStart) {this.quizzStart = true};  // Quizz hasn't started yet
+    console.log(this.index)
     if(this.index <= this.learningArrayLength){
+      console.log('in nextQuizz')
       this.words.user_id = this.user_id;
       this.words.current_word = this.word;
-      this.checkAnswer();
       if(this.index < this.learningArrayLength){ // to avoid messing up on the last "next quizz" pressure
+      this.checkAnswer();
         this.word = this.words.getLearningArray()[this.index];
         this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
         this.words.fetchVocalUrl(this.word);       // to get the vocal synthesis of the current word
       }
       console.log(this.word  + ' : ' + this.translation)
       this.index++;
-    }
+    },
 
-    else {
+    else if(this.index > this.learningArrayLength){
       this.fillLearningArrayFeedback();
       this.word = 'End of Quizz'
       this.quizzFinish = true;
@@ -82,10 +84,12 @@ export class QuizzComponent implements OnInit {
     for(let i = 0; i < this.indexFailList.length; i++) {  // fills the translation of the words failed
       this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i] + this.learningArrayLength])
     }
+    console.log(this.learningArrayFeedback)
   }
 
   checkAnswer(){
-    if(this.answer === this.translation) {  // the user responds correctly : he read the word and passes the testSuccess
+
+    if(this.answer === this.translation ) {  // the user responds correctly : he read the word and passes the testSuccess
       this.score++;
       this.words.findWordIdAndRead()
       this.words.findWordIdAndSucceedTest()

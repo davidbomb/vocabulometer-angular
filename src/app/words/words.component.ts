@@ -73,6 +73,8 @@ export class WordsComponent implements OnInit {
           .then(
             result => {
               this.tradLearningArray = result.split(",")  //shaping the trad learning array
+              for(let i = 0; i < this.tradLearningArray.length; i++){ this.tradLearningArray[i] = this.tradLearningArray[i].trim()}
+
               console.log("tradLearningArray " + this.tradLearningArray)
               console.log(this.learningArray)
               for(var i = 0; i < this.tradLearningArray.length; i++){
