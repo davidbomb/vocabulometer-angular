@@ -73,25 +73,28 @@ export class DefQuizzComponent implements OnInit {
 
 
   nextQuizz(){
-    if(!this.quizzStart) this.quizzStart = true;
-    if(this.current_score < 1 ){
-      this.index++;
-      this.current_score++;
-      this.learningArray = this.words.getLearningArray()
-      for(let i = 0; i < this.learningArrayLength/2; i++){
-        this.wordList.push(this.learningArray[i]);
+    if(!this.quizzFinish){
+      if(!this.quizzStart) this.quizzStart = true;
+      if(this.current_score < 1 ){
+        this.index++;
+        this.current_score++;
+        this.learningArray = this.words.getLearningArray()
+        for(let i = 0; i < this.learningArrayLength/2; i++){
+          this.wordList.push(this.learningArray[i]);
+        }
+        this.fillDefQuizz(this.wordList)
       }
-      this.fillDefQuizz(this.wordList)
-    }
 
-    if(this.score >= 5 ){
-      this.index++;
-      this.current_score++;
-      for(let i = this.learningArrayLength/2; i < this.learningArrayLength; i++){
-        this.wordList.push(this.learningArray[i]);
+      if(this.score === 5 && this.current_score === 1 ){
+        //this.index++;
+        this.current_score++;
+        for(let i = this.learningArrayLength/2; i < this.learningArrayLength; i++){
+          this.wordList.push(this.learningArray[i]);
+        }
+        this.fillDefQuizz(this.wordList)
       }
-      this.fillDefQuizz(this.wordList)
     }
+    if(this.score === this.learningArrayLength) this.quizzFinish = true;
 }
 
 
@@ -108,7 +111,7 @@ fillDefQuizz(wordList){
       err => { console.log(err) };
    )
  }
-}
+},
 
 findAndRemove(text, list){ // remove from list when there is a good answer
   for(let i = 0; i < list.length; i++){
