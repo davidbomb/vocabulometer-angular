@@ -12,8 +12,6 @@ import { WordService } from '../word.service'
 export class DefQuizzComponent implements OnInit {
 
   private user_id: number;
-  private user_lv: number;
-  private word_id: number;
   private learningArray: String[] = [];          // contains the words to learn
   private learningArrayLength:number = 10;       // defines the number of words in a quizz
   private learningArrayTmp: String[] = [];
@@ -31,7 +29,6 @@ export class DefQuizzComponent implements OnInit {
 
 
   user_id = '222';
-  user_lv = 1;
   word = '';
   quizzStart = false;
   quizzFinish = false;
@@ -54,7 +51,7 @@ export class DefQuizzComponent implements OnInit {
     if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
       this.score++;
       this.index++;
-      this.findAndRemove(this.userAnswerVoc, this.wordList)
+      this.findAndRemove(this.userAnswerVoc, this.wordList)     // update the quizz if good answer
       this.findAndRemove(this.userAnswerDef, this.defList)
       console.log("good answer");
     }
@@ -65,7 +62,7 @@ export class DefQuizzComponent implements OnInit {
     if(this.userAnswerDef === this.defArray[this.userAnswerVoc]) {
       this.score++;
       this.index++;
-      this.findAndRemove(this.userAnswerVoc, this.wordList)
+      this.findAndRemove(this.userAnswerVoc, this.wordList)      // update the quizz if good answer
       this.findAndRemove(this.userAnswerDef, this.defList)
       console.log("good answer");
     }

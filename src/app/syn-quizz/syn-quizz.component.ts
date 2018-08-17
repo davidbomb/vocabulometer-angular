@@ -34,7 +34,7 @@ export class SynQuizzComponent implements OnInit {
   private quizzFinish: boolean;                  // used in the html to dispay/hide tags
 
 //initializing variables
-  user_id = '222';
+  user_id = '222';                               // fake user id used for the tests: later it should be the userID of the website's user
   user_lv = 1;
   word = '';
   answer1 = "";

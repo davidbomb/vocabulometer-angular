@@ -57,15 +57,15 @@ export class QuizzComponent implements OnInit {
       console.log('in nextQuizz')
       this.words.user_id = this.user_id;
       this.words.current_word = this.word;
-      if(this.index < this.learningArrayLength){ // to avoid messing up on the last "next quizz" pressure
       this.checkAnswer();
+      if(this.index < this.learningArrayLength){ // to avoid messing up on the last "next quizz" pressure
         this.word = this.words.getLearningArray()[this.index];
         this.translation = this.words.getLearningArray()[this.index + this.learningArrayLength]
         this.words.fetchVocalUrl(this.word);       // to get the vocal synthesis of the current word
       }
       console.log(this.word  + ' : ' + this.translation)
       this.index++;
-    },
+    }
 
     else if(this.index > this.learningArrayLength){
       this.fillLearningArrayFeedback();
@@ -77,7 +77,8 @@ export class QuizzComponent implements OnInit {
 
 
   fillLearningArrayFeedback(){
-    this.indexFailList.pop()        // one extra index is pushed in the loop and must be removed
+    if(this.indexFailList[0] === -1) this.indexFailList.shift()   // otherwise it doesn't work (i don't really know why)
+    console.log("indexFailList " + this.indexFailList)
     for(let i = 0; i < this.indexFailList.length; i++) {  // fills the words failed
       this.learningArrayFeedback.push(this.words.getLearningArray()[this.indexFailList[i]])
     }
@@ -93,10 +94,15 @@ export class QuizzComponent implements OnInit {
       this.score++;
       this.words.findWordIdAndRead()
       this.words.findWordIdAndSucceedTest()
+      console.log("not in indexFailList " + this.index)
     }
     else {   // the user responds wrong: he passes testFail
       this.words.findWordIdAndFailTest();
-      this.indexFailList.push(this.index);   // retrieving the index of failed word to show it again during feedback
+      this.indexFailList.push(this.index -1);
+      console.log("indeeex : " + this.index)
+      console.log("indexFailList " + this.indexFailList)
+
+
     }
   }
 
